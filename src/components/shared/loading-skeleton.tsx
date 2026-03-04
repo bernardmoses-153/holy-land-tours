@@ -22,20 +22,12 @@ function SkeletonCard() {
 
 function SkeletonTableRow() {
   return (
-    <tr>
-      <td className="px-4 py-3">
-        <div className="skeleton h-4 w-28" />
-      </td>
-      <td className="px-4 py-3">
-        <div className="skeleton h-4 w-20" />
-      </td>
-      <td className="px-4 py-3">
-        <div className="skeleton h-4 w-16" />
-      </td>
-      <td className="px-4 py-3">
-        <div className="skeleton h-4 w-24" />
-      </td>
-    </tr>
+    <div className="flex items-center gap-4 border-b border-border px-4 py-3">
+      <div className="skeleton h-4 w-28" />
+      <div className="skeleton h-4 w-20" />
+      <div className="skeleton h-4 w-16" />
+      <div className="skeleton h-4 w-24" />
+    </div>
   );
 }
 
