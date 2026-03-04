@@ -12,6 +12,10 @@ import {
   FileText,
   Bell,
   User,
+  Backpack,
+  MessageCircle,
+  Megaphone,
+  Bot,
   type LucideIcon,
 } from "lucide-react";
 
@@ -37,6 +41,8 @@ export const leaderNav: NavItem[] = [
   { label: "Itinerary", href: "/leader/itinerary", icon: Calendar },
   { label: "Earnings", href: "/leader/earnings", icon: Wallet },
   { label: "Tour Mode", href: "/leader/tour-mode", icon: Radio },
+  { label: "Announcements", href: "/leader/announcements", icon: Megaphone },
+  { label: "AI Assistant", href: "/leader/assistant", icon: Bot },
   { label: "Settings", href: "/leader/settings", icon: Settings },
 ];
 
@@ -44,6 +50,8 @@ export const touristNav: NavItem[] = [
   { label: "Home", href: "/tourist", icon: LayoutDashboard },
   { label: "Itinerary", href: "/tourist/itinerary", icon: Calendar },
   { label: "Documents", href: "/tourist/documents", icon: FileText },
+  { label: "Prepare", href: "/tourist/prepare", icon: Backpack },
+  { label: "My Group", href: "/tourist/group", icon: Users },
   { label: "Updates", href: "/tourist/notifications", icon: Bell },
   { label: "Profile", href: "/tourist/profile", icon: User },
 ];
@@ -52,6 +60,6 @@ export const touristBottomNav: NavItem[] = [
   { label: "Home", href: "/tourist", icon: LayoutDashboard },
   { label: "Itinerary", href: "/tourist/itinerary", icon: Calendar },
   { label: "Docs", href: "/tourist/documents", icon: FileText },
-  { label: "Updates", href: "/tourist/notifications", icon: Bell },
+  { label: "Group", href: "/tourist/group", icon: Users },
   { label: "Tour", href: "/tourist/tour-mode", icon: Radio },
 ];

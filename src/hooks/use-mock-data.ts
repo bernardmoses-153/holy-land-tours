@@ -148,3 +148,45 @@ export function useAllDocuments() {
 export function useDayLogs() {
   return useMockFetch<DayLog[]>(dayLogs);
 }
+
+// ─── Phase 2 Hooks ───────────────────────────────────────────────────────────
+
+import { tripWeather, getWeatherForDay } from "@/data/weather";
+import type { WeatherDay } from "@/data/weather";
+import { leaderInsights } from "@/data/ai-responses";
+import type { AIMockMessage } from "@/data/ai-responses";
+import { packingList, culturalTips, hebrewPhrases, healthInfo, currencyInfo } from "@/data/preparation";
+import type { PackingItem, CulturalTip, HebrewPhrase, HealthInfo, CurrencyInfo } from "@/data/preparation";
+
+export function useTripWeather() {
+  return useMockFetch<WeatherDay[]>(tripWeather);
+}
+
+export function useWeatherForDay(dayNumber: number) {
+  const weather = getWeatherForDay(dayNumber);
+  return useMockFetch<WeatherDay | undefined>(weather);
+}
+
+export function useLeaderInsights() {
+  return useMockFetch<AIMockMessage[]>(leaderInsights);
+}
+
+export function usePackingList() {
+  return useMockFetch<PackingItem[]>(packingList);
+}
+
+export function useCulturalTips() {
+  return useMockFetch<CulturalTip[]>(culturalTips);
+}
+
+export function useHebrewPhrases() {
+  return useMockFetch<HebrewPhrase[]>(hebrewPhrases);
+}
+
+export function useHealthInfo() {
+  return useMockFetch<HealthInfo[]>(healthInfo);
+}
+
+export function useCurrencyInfo() {
+  return useMockFetch<CurrencyInfo>(currencyInfo);
+}

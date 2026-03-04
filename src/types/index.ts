@@ -190,3 +190,37 @@ export interface StatCard {
   trend?: "up" | "down" | "neutral";
   icon?: string;
 }
+
+// ─── Phase 2 Types ───────────────────────────────────────────────────────────
+
+export interface ChatMessage {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  timestamp: string;
+}
+
+export interface Announcement {
+  id: string;
+  subject: string;
+  body: string;
+  sentAt: string;
+  sentBy: string;
+  recipientCount: number;
+  templateId?: string;
+}
+
+export interface JournalEntry {
+  id: string;
+  dayNumber: number;
+  content: string;
+  mood: "amazing" | "good" | "okay" | "tired" | "challenging";
+  createdAt: string;
+}
+
+export interface EnrichedItineraryDay extends ItineraryDay {
+  story?: string;
+  imageUrl?: string;
+  difficulty?: "easy" | "moderate" | "challenging";
+  walkingDistance?: string;
+}

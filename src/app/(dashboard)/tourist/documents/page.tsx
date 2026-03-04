@@ -1,12 +1,22 @@
 "use client";
 
 import { useTourist, useDocuments } from "@/hooks/use-mock-data";
-import { PageHeader, StatusBadge, LoadingSkeleton } from "@/components/shared";
+import { PageHeader, StatusBadge, LoadingSkeleton, AIAssistantCard, TimelineStep } from "@/components/shared";
 import { formatDate, cn } from "@/lib/utils";
-import { DOCUMENT_STATUS_LABELS } from "@/lib/constants";
-import { FileText, Heart, Shield, Plane, Upload, CheckCircle2, File } from "lucide-react";
+import {
+  FileText,
+  Heart,
+  Shield,
+  Plane,
+  Upload,
+  CheckCircle2,
+  File,
+  Sparkles,
+  PartyPopper,
+} from "lucide-react";
 import type { DocumentStatus } from "@/types";
 import type { LucideIcon } from "lucide-react";
+import { docAssistantMessages, docAssistantTips } from "@/data/ai-responses";
 
 const TOURIST_ID = "t-1";
 
@@ -22,6 +32,12 @@ const documentCards: DocumentCardConfig[] = [
   { type: "medical_form", label: "Medical Form", icon: Heart, statusKey: "medicalFormStatus" },
   { type: "insurance", label: "Insurance", icon: Shield, statusKey: "insuranceStatus" },
   { type: "flight_info", label: "Flight Information", icon: Plane, statusKey: "flightInfoStatus" },
+];
+
+const timelineSteps = [
+  { title: "Upload Document", description: "Upload a clear copy of your document" },
+  { title: "Under Review", description: "Our team reviews your submission" },
+  { title: "Approved", description: "Document verified and approved" },
 ];
 
 export default function DocumentsPage() {
@@ -41,13 +57,78 @@ export default function DocumentsPage() {
 
   if (!tourist || !docs) return null;
 
+  const allApproved =
+    tourist.passportStatus === "approved" &&
+    tourist.medicalFormStatus === "approved" &&
+    tourist.insuranceStatus === "approved" &&
+    tourist.flightInfoStatus === "approved";
+
+  const approvedCount = [
+    tourist.passportStatus,
+    tourist.medicalFormStatus,
+    tourist.insuranceStatus,
+    tourist.flightInfoStatus,
+  ].filter((s) => s === "approved").length;
+
+  // Find relevant AI insight
+  const aiInsight = docAssistantMessages.find((msg) => {
+    if (msg.category === "passport" && tourist.passportStatus !== "approved") return true;
+    if (msg.category === "flight" && tourist.flightInfoStatus === "not_started") return true;
+    if (msg.category === "insurance" && tourist.insuranceStatus !== "approved") return true;
+    return false;
+  });
+
   return (
     <div className="space-y-6">
       <PageHeader
         title="My Documents"
         description="Upload and manage your travel documents"
-      />
+      >
+        <span className="text-xs font-medium text-secondary">
+          {approvedCount}/4 approved
+        </span>
+      </PageHeader>
 
+      {/* AI Document Assistant */}
+      {aiInsight && (
+        <AIAssistantCard
+          message={aiInsight.content}
+          category="Document Assistant"
+          variant="gold"
+        />
+      )}
+
+      {/* Completion celebration */}
+      {allApproved && (
+        <div className="rounded-xl border border-success/20 bg-success-bg p-6 text-center space-y-2">
+          <PartyPopper className="h-8 w-8 text-success mx-auto" />
+          <h3 className="text-sm font-semibold text-success">All Documents Approved!</h3>
+          <p className="text-xs text-success/80">
+            You&apos;re all set for your Holy Land journey. All four documents have been verified and approved.
+          </p>
+        </div>
+      )}
+
+      {/* Document Timeline */}
+      <div className="rounded-xl border border-border bg-background p-4 space-y-3">
+        <h3 className="text-sm font-medium text-foreground flex items-center gap-2">
+          <Sparkles className="h-4 w-4 text-gold" />
+          How it works
+        </h3>
+        <div>
+          {timelineSteps.map((step, index) => (
+            <TimelineStep
+              key={step.title}
+              title={step.title}
+              description={step.description}
+              status={index < approvedCount ? "completed" : index === approvedCount ? "current" : "upcoming"}
+              isLast={index === timelineSteps.length - 1}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Document Cards */}
       <div className="space-y-4">
         {documentCards.map((card) => {
           const Icon = card.icon;
@@ -61,7 +142,6 @@ export default function DocumentsPage() {
               key={card.type}
               className="rounded-xl border border-border bg-background overflow-hidden"
             >
-              {/* Card Header */}
               <div className="p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div
@@ -89,7 +169,6 @@ export default function DocumentsPage() {
                 <StatusBadge status={status} />
               </div>
 
-              {/* File Info or Upload Area */}
               <div className="border-t border-border px-4 py-3 bg-surface">
                 {hasFile ? (
                   <div className="flex items-center justify-between">
@@ -116,10 +195,7 @@ export default function DocumentsPage() {
                     </button>
                   </div>
                 ) : (
-                  <button
-                    type="button"
-                    className="w-full"
-                  >
+                  <button type="button" className="w-full">
                     <div className="flex flex-col items-center justify-center py-6 border-2 border-dashed border-border rounded-lg hover:border-border-hover hover:bg-elevated transition-colors cursor-pointer">
                       <Upload className="h-6 w-6 text-muted mb-2" />
                       <p className="text-sm text-secondary font-medium">
@@ -135,6 +211,22 @@ export default function DocumentsPage() {
             </div>
           );
         })}
+      </div>
+
+      {/* Smart Tips */}
+      <div className="rounded-xl border border-border bg-gold-bg p-4 space-y-3">
+        <h3 className="text-sm font-medium text-foreground flex items-center gap-2">
+          <Sparkles className="h-4 w-4 text-gold" />
+          Smart Tips
+        </h3>
+        <ul className="space-y-2">
+          {docAssistantTips.map((tip) => (
+            <li key={tip} className="flex items-start gap-2 text-xs text-secondary">
+              <span className="text-gold mt-0.5">•</span>
+              {tip}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
