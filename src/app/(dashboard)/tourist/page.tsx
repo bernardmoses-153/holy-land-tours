@@ -1,7 +1,7 @@
 "use client";
 
 import { useTourist, useGroup, useItinerary, useNotifications, useTouristsByGroup, useWeatherForDay } from "@/hooks/use-mock-data";
-import { CountdownTimer, StatusBadge, LoadingSkeleton, FillRateBar, ImageHero, AIAssistantCard, ReadinessGauge, GroupMemberGrid, WeatherCard } from "@/components/shared";
+import { CountdownTimer, StatusBadge, LoadingSkeleton, FillRateBar, ImageHero, AIAssistantCard, ReadinessGauge, GroupMemberGrid, WeatherCard, PaymentSchedule, ContentTimeline, PostTripSummary, TestimonialForm, ReferralCard } from "@/components/shared";
 import { formatCurrency, formatDate, cn } from "@/lib/utils";
 import Link from "next/link";
 import {
@@ -21,6 +21,8 @@ import {
 } from "lucide-react";
 import { holyLandImages } from "@/data/images";
 import { docAssistantMessages } from "@/data/ai-responses";
+import { getPaymentPlanByTourist } from "@/data/mock-data";
+import { contentDripItems } from "@/data/content-drip";
 
 const TOURIST_ID = "t-1";
 
@@ -260,6 +262,35 @@ export default function TouristDashboardPage() {
             </div>
           </div>
         </div>
+
+        {/* Payment Schedule (if tourist has a payment plan) */}
+        {(() => {
+          const paymentPlan = getPaymentPlanByTourist(TOURIST_ID);
+          if (!paymentPlan) return null;
+          return <PaymentSchedule plan={paymentPlan} />;
+        })()}
+
+        {/* Content Timeline (pre-trip drip) */}
+        {group.status !== "completed" && group.status !== "in_tour" && (
+          <ContentTimeline
+            items={contentDripItems}
+            departureDate={group.startDate}
+            registrationDate={tourist.createdAt}
+          />
+        )}
+
+        {/* Post-Trip Experience */}
+        {group.status === "completed" && (
+          <div className="space-y-6">
+            <PostTripSummary
+              group={group}
+              itinerary={itinerary}
+              touristName={tourist.name}
+            />
+            <TestimonialForm />
+            <ReferralCard />
+          </div>
+        )}
 
         {/* Group Preview */}
         {groupMembers && groupMembers.length > 0 && (

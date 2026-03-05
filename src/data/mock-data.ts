@@ -10,6 +10,15 @@ import type {
   ChecklistItem,
   DocumentRecord,
   DayLog,
+  Supplier,
+  SupplierBooking,
+  Guide,
+  GuideAssignment,
+  PaymentPlan,
+  GroupCosts,
+  CulturalProfile,
+  Testimonial,
+  TripPageConfig,
 } from "@/types";
 
 // ─── Operator ──────────────────────────────────────────────────
@@ -495,6 +504,224 @@ export const dayLogs: DayLog[] = [
   },
 ];
 
+// ─── Suppliers ────────────────────────────────────────────────
+export const suppliers: Supplier[] = [
+  {
+    id: "sup-1", type: "hotel", name: "David Citadel Hotel", contactName: "Moshe Stein",
+    phone: "+972-2-621-1111", whatsapp: "+972-50-111-1111", email: "groups@davidcitadel.com",
+    location: "Jerusalem", rating: 4.8, priceNotes: "$180-220/night double occupancy",
+    dietary: ["kosher", "halal", "vegetarian", "vegan", "gluten-free"],
+  },
+  {
+    id: "sup-2", type: "hotel", name: "Scots Hotel", contactName: "Yael Avraham",
+    phone: "+972-4-671-0710", whatsapp: "+972-50-222-2222", email: "reservations@scotshotel.com",
+    location: "Tiberias", rating: 4.6, priceNotes: "$150-180/night double occupancy",
+    dietary: ["kosher", "vegetarian", "gluten-free"],
+  },
+  {
+    id: "sup-3", type: "hotel", name: "Dead Sea Resort & Spa", contactName: "Rami Habib",
+    phone: "+972-8-668-9999", whatsapp: "+972-50-333-3333", email: "groups@deadsearesortspa.com",
+    location: "Dead Sea", rating: 4.5, priceNotes: "$160-200/night double occupancy",
+    dietary: ["kosher", "vegetarian", "vegan"],
+  },
+  {
+    id: "sup-4", type: "hotel", name: "Beresheet Hotel", contactName: "Noa Shapira",
+    phone: "+972-8-659-8000", whatsapp: "+972-50-444-4444", email: "groups@beresheet.com",
+    location: "Mitzpe Ramon", rating: 4.9, priceNotes: "$250-320/night double occupancy, luxury",
+    dietary: ["kosher", "vegetarian", "vegan", "gluten-free"],
+  },
+  {
+    id: "sup-5", type: "bus_company", name: "Egged Tours", contactName: "Avi Levi",
+    phone: "+972-3-694-8888", whatsapp: "+972-50-555-5555", email: "groups@eggedtours.com",
+    location: "Tel Aviv", rating: 4.4, priceNotes: "$600-800/day for 50-seat coach",
+    languages: ["Hebrew", "English"],
+  },
+  {
+    id: "sup-6", type: "activity", name: "Galilee Boats", contactName: "Shimon Dagan",
+    phone: "+972-4-672-3006", whatsapp: "+972-50-666-6666", email: "tours@galileeboats.com",
+    location: "Tiberias", rating: 4.7, priceNotes: "$25/person for worship boat ride",
+  },
+  {
+    id: "sup-7", type: "restaurant", name: "Jerusalem Restaurant Group", contactName: "Tamar Katz",
+    phone: "+972-2-623-4567", whatsapp: "+972-50-777-7777", email: "events@jrg.co.il",
+    location: "Jerusalem", rating: 4.3, priceNotes: "$25-40/person group meals",
+    dietary: ["kosher", "halal", "vegetarian", "vegan", "gluten-free", "korean", "indian-vegetarian"],
+  },
+  {
+    id: "sup-8", type: "transfer", name: "Holy Land Transfers", contactName: "Danny Cohen",
+    phone: "+972-3-555-0101", whatsapp: "+972-50-888-8888", email: "bookings@hltransfers.com",
+    location: "Tel Aviv", rating: 4.6, priceNotes: "$150-200/transfer airport to Jerusalem",
+  },
+];
+
+// ─── Guides ──────────────────────────────────────────────────
+export const guides: Guide[] = [
+  {
+    id: "guide-1", name: "David Levy",
+    phone: "+972-50-901-0001", whatsapp: "+972-50-901-0001", email: "david.levy@guides.co.il",
+    languages: ["English", "Korean"], specialties: ["Biblical History", "Archaeology", "New Testament"],
+    licenseNumber: "IL-G-2015-0234", rating: 4.9, toursCompleted: 215,
+    bio: "David has been guiding groups in Israel for over 12 years. Born in Jerusalem, he specializes in bringing biblical narratives to life at the very sites where they occurred. His fluency in Korean makes him the top choice for Korean-American church groups.",
+  },
+  {
+    id: "guide-2", name: "Sarah Cohen",
+    phone: "+972-50-901-0002", whatsapp: "+972-50-901-0002", email: "sarah.cohen@guides.co.il",
+    languages: ["English", "Spanish"], specialties: ["Archaeological Sites", "Jewish History", "Dead Sea Region"],
+    licenseNumber: "IL-G-2012-0156", rating: 4.7, toursCompleted: 158,
+    bio: "Sarah holds a PhD in Biblical Archaeology from Hebrew University. Her tours blend academic rigor with accessible storytelling, making ancient history come alive for travelers of all backgrounds.",
+  },
+  {
+    id: "guide-3", name: "Michael Park",
+    phone: "+972-50-901-0003", whatsapp: "+972-50-901-0003", email: "michael.park@guides.co.il",
+    languages: ["English", "Korean", "Tagalog"], specialties: ["Cultural Bridge", "Christian Pilgrimage", "Group Dynamics"],
+    licenseNumber: "IL-G-2018-0412", rating: 4.8, toursCompleted: 83,
+    bio: "Michael grew up in both Seoul and Manila before making Israel his home. He uniquely understands the Asian-American pilgrim's perspective and creates deeply personal experiences that bridge cultures and faiths.",
+  },
+  {
+    id: "guide-4", name: "Ruth Goldstein",
+    phone: "+972-50-901-0004", whatsapp: "+972-50-901-0004", email: "ruth.goldstein@guides.co.il",
+    languages: ["English", "Hindi"], specialties: ["Interfaith Dialogue", "Spiritual Retreats", "Meditation Sites"],
+    licenseNumber: "IL-G-2014-0289", rating: 4.6, toursCompleted: 124,
+    bio: "Ruth spent 5 years in India studying comparative religion before returning to Israel. She leads contemplative tours that honor multiple faith traditions and create space for deep spiritual reflection.",
+  },
+];
+
+// ─── Guide Assignments ───────────────────────────────────────
+export const guideAssignments: GuideAssignment[] = [
+  { id: "ga-1", guideId: "guide-1", guideName: "David Levy", groupId: "group-1", groupName: "Grace Church Holy Land 2026", startDate: "2026-04-15", endDate: "2026-04-22", status: "confirmed", dailyRate: 350 },
+  { id: "ga-2", guideId: "guide-2", guideName: "Sarah Cohen", groupId: "group-2", groupName: "Faith Fellowship Spring Pilgrimage", startDate: "2026-05-10", endDate: "2026-05-19", status: "assigned", dailyRate: 350 },
+  { id: "ga-3", guideId: "guide-4", guideName: "Ruth Goldstein", groupId: "group-3", groupName: "Beth Shalom Heritage Tour", startDate: "2026-06-01", endDate: "2026-06-08", status: "assigned", dailyRate: 320 },
+  { id: "ga-4", guideId: "guide-2", guideName: "Sarah Cohen", groupId: "group-4", groupName: "Wilson Adventure Negev", startDate: "2026-07-05", endDate: "2026-07-10", status: "assigned", dailyRate: 350 },
+  { id: "ga-5", guideId: "guide-1", guideName: "David Levy", groupId: "group-6", groupName: "In-Tour: Easter Pilgrimage", startDate: "2026-03-01", endDate: "2026-03-08", status: "confirmed", dailyRate: 350 },
+];
+
+// ─── Supplier Bookings ───────────────────────────────────────
+export const supplierBookings: SupplierBooking[] = [
+  // Group 1 — Grace Church (confirmed)
+  { id: "sb-1", supplierId: "sup-1", supplierName: "David Citadel Hotel", supplierType: "hotel", groupId: "group-1", groupName: "Grace Church Holy Land 2026", date: "2026-04-15", dayNumber: 1, status: "confirmed", cost: 5400, pax: 30, notes: "3 nights, 15 double rooms" },
+  { id: "sb-2", supplierId: "sup-3", supplierName: "Dead Sea Resort & Spa", supplierType: "hotel", groupId: "group-1", groupName: "Grace Church Holy Land 2026", date: "2026-04-18", dayNumber: 4, status: "confirmed", cost: 3600, pax: 30, notes: "2 nights, 15 double rooms" },
+  { id: "sb-3", supplierId: "sup-2", supplierName: "Scots Hotel", supplierType: "hotel", groupId: "group-1", groupName: "Grace Church Holy Land 2026", date: "2026-04-20", dayNumber: 6, status: "confirmed", cost: 3000, pax: 30, notes: "2 nights, 15 double rooms" },
+  { id: "sb-4", supplierId: "sup-5", supplierName: "Egged Tours", supplierType: "bus_company", groupId: "group-1", groupName: "Grace Church Holy Land 2026", date: "2026-04-15", dayNumber: 1, status: "confirmed", cost: 5600, pax: 30, notes: "50-seat coach, 8 days" },
+  { id: "sb-5", supplierId: "sup-6", supplierName: "Galilee Boats", supplierType: "activity", groupId: "group-1", groupName: "Grace Church Holy Land 2026", date: "2026-04-20", dayNumber: 6, status: "confirmed", cost: 750, pax: 30, notes: "Worship boat ride" },
+  { id: "sb-6", supplierId: "sup-7", supplierName: "Jerusalem Restaurant Group", supplierType: "restaurant", groupId: "group-1", groupName: "Grace Church Holy Land 2026", date: "2026-04-15", dayNumber: 1, status: "confirmed", cost: 3000, pax: 30, notes: "Welcome dinner + 3 group meals" },
+  { id: "sb-7", supplierId: "sup-8", supplierName: "Holy Land Transfers", supplierType: "transfer", groupId: "group-1", groupName: "Grace Church Holy Land 2026", date: "2026-04-15", dayNumber: 1, status: "confirmed", cost: 400, pax: 30, notes: "Airport pickup + drop-off" },
+
+  // Group 2 — Faith Fellowship (filling)
+  { id: "sb-8", supplierId: "sup-1", supplierName: "David Citadel Hotel", supplierType: "hotel", groupId: "group-2", groupName: "Faith Fellowship Spring Pilgrimage", date: "2026-05-10", dayNumber: 1, status: "requested", cost: 7200, pax: 18, notes: "5 nights, 9 double rooms" },
+  { id: "sb-9", supplierId: "sup-5", supplierName: "Egged Tours", supplierType: "bus_company", groupId: "group-2", groupName: "Faith Fellowship Spring Pilgrimage", date: "2026-05-10", dayNumber: 1, status: "requested", cost: 7000, pax: 18, notes: "30-seat coach, 10 days" },
+];
+
+// ─── Group Costs ─────────────────────────────────────────────
+export const groupCosts: GroupCosts[] = [
+  { groupId: "group-1", hotel: 12000, transport: 5600, guide: 2800, meals: 4500, activities: 2250, other: 1500, commissions: 8550 },
+  { groupId: "group-2", hotel: 10800, transport: 7000, guide: 3500, meals: 5400, activities: 1800, other: 1200, commissions: 6120 },
+  { groupId: "group-3", hotel: 10260, transport: 4800, guide: 2560, meals: 3800, activities: 1900, other: 1100, commissions: 6498 },
+  { groupId: "group-4", hotel: 4500, transport: 3000, guide: 2100, meals: 1600, activities: 1400, other: 800, commissions: 1408 },
+  { groupId: "group-6", hotel: 13500, transport: 5600, guide: 2800, meals: 5000, activities: 2500, other: 1500, commissions: 7125 },
+];
+
+// ─── Payment Plans ───────────────────────────────────────────
+export const paymentPlans: PaymentPlan[] = [
+  {
+    id: "pp-1", touristId: "t-3", groupId: "group-1", totalAmount: 2850, depositAmount: 500, installmentCount: 12, amountPerInstallment: 196,
+    status: "active",
+    schedule: [
+      { dueDate: "2025-10-15", amount: 500, status: "paid", paidDate: "2025-10-15" },
+      { dueDate: "2025-11-15", amount: 196, status: "paid", paidDate: "2025-11-14" },
+      { dueDate: "2025-12-15", amount: 196, status: "paid", paidDate: "2025-12-15" },
+      { dueDate: "2026-01-15", amount: 196, status: "paid", paidDate: "2026-01-15" },
+      { dueDate: "2026-02-15", amount: 196, status: "paid", paidDate: "2026-02-14" },
+      { dueDate: "2026-03-15", amount: 196, status: "upcoming" },
+      { dueDate: "2026-04-01", amount: 1370, status: "upcoming" },
+    ],
+  },
+  {
+    id: "pp-2", touristId: "t-5", groupId: "group-1", totalAmount: 2850, depositAmount: 500, installmentCount: 6, amountPerInstallment: 392,
+    status: "active",
+    schedule: [
+      { dueDate: "2025-10-15", amount: 500, status: "paid", paidDate: "2025-10-05" },
+      { dueDate: "2025-11-15", amount: 392, status: "paid", paidDate: "2025-11-15" },
+      { dueDate: "2025-12-15", amount: 392, status: "paid", paidDate: "2025-12-16" },
+      { dueDate: "2026-01-15", amount: 392, status: "paid", paidDate: "2026-01-15" },
+      { dueDate: "2026-02-15", amount: 392, status: "paid", paidDate: "2026-02-15" },
+      { dueDate: "2026-03-15", amount: 392, status: "upcoming" },
+      { dueDate: "2026-04-01", amount: 382, status: "upcoming" },
+    ],
+  },
+  {
+    id: "pp-3", touristId: "t-9", groupId: "group-1", totalAmount: 2850, depositAmount: 500, installmentCount: 12, amountPerInstallment: 196,
+    status: "active",
+    schedule: [
+      { dueDate: "2025-11-15", amount: 500, status: "paid", paidDate: "2025-11-15" },
+      { dueDate: "2025-12-15", amount: 196, status: "overdue" },
+      { dueDate: "2026-01-15", amount: 196, status: "overdue" },
+      { dueDate: "2026-02-15", amount: 196, status: "overdue" },
+      { dueDate: "2026-03-15", amount: 196, status: "upcoming" },
+      { dueDate: "2026-04-01", amount: 1566, status: "upcoming" },
+    ],
+  },
+];
+
+// ─── Cultural Profiles ───────────────────────────────────────
+export const culturalProfiles: Record<string, CulturalProfile> = {
+  us_english: {
+    market: "us_english", primaryLanguage: "English", communicationChannel: "email",
+    dietaryDefaults: [], guideLanguagePreference: ["English"], currencyDisplay: "USD",
+  },
+  us_korean: {
+    market: "us_korean", primaryLanguage: "Korean", secondaryLanguage: "English",
+    communicationChannel: "kakaotalk",
+    dietaryDefaults: ["Korean meals", "Rice with every meal", "Kimchi availability"],
+    guideLanguagePreference: ["Korean", "English"], currencyDisplay: "USD",
+  },
+  us_filipino: {
+    market: "us_filipino", primaryLanguage: "Tagalog", secondaryLanguage: "English",
+    communicationChannel: "viber",
+    dietaryDefaults: ["Rice with every meal"],
+    guideLanguagePreference: ["Tagalog", "English"], currencyDisplay: "USD",
+  },
+  us_indian: {
+    market: "us_indian", primaryLanguage: "Hindi", secondaryLanguage: "English",
+    communicationChannel: "whatsapp",
+    dietaryDefaults: ["Vegetarian", "No beef"],
+    guideLanguagePreference: ["Hindi", "English"], currencyDisplay: "USD",
+  },
+};
+
+// ─── Testimonials ────────────────────────────────────────────
+export const testimonials: Testimonial[] = [
+  { id: "test-1", touristId: "t-24", touristName: "Rachel Adams", groupId: "group-6", rating: 5, text: "This trip exceeded every expectation. Walking where Jesus walked — there are no words. David, our guide, brought every site to life with stories that gave me goosebumps. The organization was flawless.", createdAt: "2026-03-09" },
+  { id: "test-2", touristId: "t-26", touristName: "Marcus Johnson", groupId: "group-6", rating: 5, text: "As a vegan, I was worried about food options. They had incredible vegan meals at every stop. The Dead Sea was surreal and Masada at sunrise changed my life. Already planning my next trip.", createdAt: "2026-03-10" },
+  { id: "test-3", touristId: "t-27", touristName: "Helen Foster", groupId: "group-6", rating: 4, text: "I almost cancelled because of safety concerns. I'm so glad I didn't. I felt completely safe the entire trip. The Western Wall brought me to tears. A truly life-changing experience.", createdAt: "2026-03-09" },
+];
+
+// ─── Trip Page Configs ───────────────────────────────────────
+export const tripPageConfigs: TripPageConfig[] = [
+  {
+    groupId: "group-1", slug: "grace-church-2026", heroImageKey: "jerusalem",
+    welcomeMessage: "Dear friends, I'm thrilled to invite you on a journey that will transform your faith. We'll walk where Jesus walked, float in the Dead Sea, and create memories that will last a lifetime. This trip is open to everyone in our church family — I hope you'll join us!",
+    showInstallments: true, installmentOptions: [6, 12], depositAmount: 500,
+    faqItems: [
+      { question: "Do I need a visa to visit Israel?", answer: "US citizens need an ETA-IL (Electronic Travel Authorization) which is easy to obtain online. We'll guide you through the process after you register." },
+      { question: "Is it safe to travel to Israel?", answer: "Israel welcomes over 4.5 million tourists annually with world-class security infrastructure. Our groups have a 100% safety record and we provide 24/7 local support throughout your trip." },
+      { question: "What's the physical activity level?", answer: "Most days involve moderate walking (2-4 miles) on mixed terrain. Key sites like Masada have cable car access. We accommodate all fitness levels and can arrange alternatives for challenging sections." },
+      { question: "Are meals included?", answer: "Most meals are included per the itinerary (breakfast daily, most lunches, select dinners). We accommodate all dietary needs including vegetarian, vegan, gluten-free, kosher, and halal." },
+      { question: "What's the cancellation policy?", answer: "Full refund minus $100 processing fee if cancelled 90+ days before departure. 50% refund 60-89 days before. No refund within 60 days. Travel insurance is strongly recommended." },
+      { question: "Can I share a room to reduce cost?", answer: "Yes! Double rooms are the default and most popular option. Single rooms are available for an additional $450. Triple rooms offer the best value." },
+    ],
+  },
+  {
+    groupId: "group-2", slug: "faith-fellowship-spring", heroImageKey: "prayer",
+    welcomeMessage: "Join our Faith Fellowship family on a deeply spiritual 10-day pilgrimage to the Holy Land. This contemplative journey focuses on prayer, meditation, and biblical study at the very sites where scripture came to life.",
+    showInstallments: true, installmentOptions: [6, 12], depositAmount: 500,
+    faqItems: [
+      { question: "Do I need a visa?", answer: "US citizens need an ETA-IL, easily obtained online. We'll provide step-by-step guidance." },
+      { question: "Is Israel safe?", answer: "Yes. Israel has world-class security and welcomes millions of tourists annually. Our groups have a perfect safety record." },
+      { question: "What's the spiritual focus?", answer: "This is a contemplative journey with daily devotionals, prayer walks, and meditation time at holy sites. We balance guided exploration with personal reflection." },
+    ],
+  },
+];
+
 // ─── Accessor Functions ────────────────────────────────────────
 export function getGroupById(id: string): Group | undefined {
   return groups.find((g) => g.id === id);
@@ -538,4 +765,40 @@ export function getCommissionsByLeader(leaderId: string): Commission[] {
 
 export function getPaymentsByGroup(groupId: string): Payment[] {
   return payments.filter((p) => p.groupId === groupId);
+}
+
+export function getSupplierById(id: string): Supplier | undefined {
+  return suppliers.find((s) => s.id === id);
+}
+
+export function getSupplierBookingsByGroup(groupId: string): SupplierBooking[] {
+  return supplierBookings.filter((sb) => sb.groupId === groupId);
+}
+
+export function getGuideById(id: string): Guide | undefined {
+  return guides.find((g) => g.id === id);
+}
+
+export function getGuideAssignmentsByGroup(groupId: string): GuideAssignment[] {
+  return guideAssignments.filter((ga) => ga.groupId === groupId);
+}
+
+export function getGuideAssignmentsByGuide(guideId: string): GuideAssignment[] {
+  return guideAssignments.filter((ga) => ga.guideId === guideId);
+}
+
+export function getPaymentPlanByTourist(touristId: string): PaymentPlan | undefined {
+  return paymentPlans.find((pp) => pp.touristId === touristId);
+}
+
+export function getGroupCosts(groupId: string): GroupCosts | undefined {
+  return groupCosts.find((gc) => gc.groupId === groupId);
+}
+
+export function getTripPageConfig(slug: string): TripPageConfig | undefined {
+  return tripPageConfigs.find((tp) => tp.slug === slug);
+}
+
+export function getTestimonialsByGroup(groupId: string): Testimonial[] {
+  return testimonials.filter((t) => t.groupId === groupId);
 }

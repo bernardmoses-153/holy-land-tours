@@ -252,3 +252,157 @@ export interface GroupInvite {
   code: string;
   active: boolean;
 }
+
+// ─── Payment Plan Types ─────────────────────────────────────────────────────
+
+export interface PaymentPlan {
+  id: string;
+  touristId: string;
+  groupId: string;
+  totalAmount: number;
+  depositAmount: number;
+  installmentCount: number;
+  amountPerInstallment: number;
+  schedule: PaymentScheduleItem[];
+  status: "active" | "completed" | "defaulted";
+}
+
+export interface PaymentScheduleItem {
+  dueDate: string;
+  amount: number;
+  status: "upcoming" | "paid" | "overdue";
+  paidDate?: string;
+}
+
+// ─── Supplier & Guide Types ─────────────────────────────────────────────────
+
+export type SupplierType = "hotel" | "bus_company" | "restaurant" | "guide" | "activity" | "transfer";
+
+export interface Supplier {
+  id: string;
+  type: SupplierType;
+  name: string;
+  contactName: string;
+  phone: string;
+  whatsapp: string;
+  email: string;
+  location: string;
+  rating: number;
+  languages?: string[];
+  priceNotes: string;
+  dietary?: string[];
+}
+
+export type SupplierBookingStatus = "draft" | "requested" | "confirmed" | "modified" | "cancelled";
+
+export interface SupplierBooking {
+  id: string;
+  supplierId: string;
+  supplierName: string;
+  supplierType: SupplierType;
+  groupId: string;
+  groupName: string;
+  date: string;
+  dayNumber: number;
+  status: SupplierBookingStatus;
+  cost: number;
+  pax: number;
+  notes: string;
+}
+
+export interface Guide {
+  id: string;
+  name: string;
+  phone: string;
+  whatsapp: string;
+  email: string;
+  photo?: string;
+  languages: string[];
+  specialties: string[];
+  licenseNumber: string;
+  rating: number;
+  toursCompleted: number;
+  bio: string;
+}
+
+export type GuideAssignmentStatus = "assigned" | "confirmed" | "completed";
+
+export interface GuideAssignment {
+  id: string;
+  guideId: string;
+  guideName: string;
+  groupId: string;
+  groupName: string;
+  startDate: string;
+  endDate: string;
+  status: GuideAssignmentStatus;
+  dailyRate: number;
+}
+
+// ─── Cultural Profile Types ─────────────────────────────────────────────────
+
+export type CulturalMarket = "us_english" | "us_korean" | "us_filipino" | "us_indian" | "us_spanish" | "other";
+
+export interface CulturalProfile {
+  market: CulturalMarket;
+  primaryLanguage: string;
+  secondaryLanguage?: string;
+  communicationChannel: "email" | "whatsapp" | "kakaotalk" | "viber" | "line";
+  dietaryDefaults: string[];
+  guideLanguagePreference: string[];
+  currencyDisplay: "USD";
+}
+
+// ─── Group Costs Types ──────────────────────────────────────────────────────
+
+export interface GroupCosts {
+  groupId: string;
+  hotel: number;
+  transport: number;
+  guide: number;
+  meals: number;
+  activities: number;
+  other: number;
+  commissions: number;
+}
+
+// ─── Content Drip Types ─────────────────────────────────────────────────────
+
+export type ContentDripType = "welcome" | "inspiration" | "connection" | "education" | "action" | "community" | "practical" | "emotional";
+
+export interface ContentDripItem {
+  id: string;
+  dayOffset: number;
+  type: ContentDripType;
+  title: string;
+  teaser: string;
+  content: string;
+  imageKey?: string;
+  cta?: { label: string; href: string };
+}
+
+// ─── Post-Trip Types ────────────────────────────────────────────────────────
+
+export interface Testimonial {
+  id: string;
+  touristId: string;
+  touristName: string;
+  groupId: string;
+  rating: number;
+  text: string;
+  createdAt: string;
+}
+
+// ─── Trip Page Config ───────────────────────────────────────────────────────
+
+export interface TripPageConfig {
+  groupId: string;
+  slug: string;
+  heroImageKey: string;
+  welcomeMessage: string;
+  leaderPhoto?: string;
+  showInstallments: boolean;
+  installmentOptions: number[];
+  depositAmount: number;
+  faqItems: { question: string; answer: string }[];
+}

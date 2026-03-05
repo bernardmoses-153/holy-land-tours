@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { User, Building, Map, Users, Rocket, Sparkles, Globe, Mail } from "lucide-react";
+import { User, Building, Map, Users, Rocket, Sparkles, Globe, Mail, DollarSign, QrCode, Facebook, Printer, Copy, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/context/auth-context";
 import { useLeaderOnboarding } from "@/hooks/use-onboarding";
@@ -53,6 +53,16 @@ export default function LeaderOnboardingPage() {
   } = useLeaderOnboarding();
 
   const [showCelebration, setShowCelebration] = useState(false);
+  const [pricingConfig, setPricingConfig] = useState({
+    pricePerPerson: 2800,
+    allowInstallments: true,
+    installmentOptions: [6, 12] as number[],
+    depositAmount: 500,
+    pastorFreeTrip: true,
+    spouseFreeTrip: true,
+  });
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
   const step = data.step;
 
@@ -385,6 +395,113 @@ export default function LeaderOnboardingPage() {
             </div>
           </div>
 
+          {/* Pricing & Payment Plan Configuration */}
+          <FormSection title="Pricing & Payment Plans" icon={DollarSign}>
+            <div className="space-y-1.5">
+              <label htmlFor="price" className="block text-sm font-medium text-foreground">
+                Trip Price Per Person
+              </label>
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted">$</span>
+                <input
+                  id="price"
+                  type="number"
+                  value={pricingConfig.pricePerPerson}
+                  onChange={(e) => setPricingConfig(prev => ({ ...prev, pricePerPerson: Number(e.target.value) }))}
+                  className={cn(inputStyles, "pl-8")}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={pricingConfig.allowInstallments}
+                  onChange={(e) => setPricingConfig(prev => ({ ...prev, allowInstallments: e.target.checked }))}
+                  className="rounded border-border h-4 w-4"
+                />
+                <span className="text-sm font-medium text-foreground">Allow installment payments</span>
+              </label>
+
+              {pricingConfig.allowInstallments && (
+                <div className="ml-6 space-y-2">
+                  <p className="text-xs text-muted">Payment plan options:</p>
+                  <div className="flex gap-2">
+                    {[6, 12].map((months) => {
+                      const isSelected = pricingConfig.installmentOptions.includes(months);
+                      return (
+                        <button
+                          key={months}
+                          type="button"
+                          onClick={() => {
+                            setPricingConfig(prev => ({
+                              ...prev,
+                              installmentOptions: isSelected
+                                ? prev.installmentOptions.filter(m => m !== months)
+                                : [...prev.installmentOptions, months].sort((a, b) => a - b),
+                            }));
+                          }}
+                          className={cn(
+                            "rounded-lg border px-4 py-2 text-xs font-medium transition-all",
+                            isSelected
+                              ? "border-foreground bg-foreground text-background"
+                              : "border-border text-secondary hover:border-border-hover"
+                          )}
+                        >
+                          {months} monthly
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {pricingConfig.installmentOptions.length > 0 && (
+                    <p className="text-xs text-olive">
+                      Example: ${Math.ceil((pricingConfig.pricePerPerson - pricingConfig.depositAmount) / pricingConfig.installmentOptions[pricingConfig.installmentOptions.length - 1])}/month for {pricingConfig.installmentOptions[pricingConfig.installmentOptions.length - 1]} months
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-1.5">
+              <label htmlFor="deposit" className="block text-sm font-medium text-foreground">
+                Required Deposit
+              </label>
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted">$</span>
+                <input
+                  id="deposit"
+                  type="number"
+                  value={pricingConfig.depositAmount}
+                  onChange={(e) => setPricingConfig(prev => ({ ...prev, depositAmount: Number(e.target.value) }))}
+                  className={cn(inputStyles, "pl-8")}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2 pt-2 border-t border-border">
+              <p className="text-xs font-medium text-foreground uppercase tracking-wider">Leader Benefits</p>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={pricingConfig.pastorFreeTrip}
+                  onChange={(e) => setPricingConfig(prev => ({ ...prev, pastorFreeTrip: e.target.checked }))}
+                  className="rounded border-border h-4 w-4"
+                />
+                <span className="text-sm text-foreground">Free trip for group leader</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={pricingConfig.spouseFreeTrip}
+                  onChange={(e) => setPricingConfig(prev => ({ ...prev, spouseFreeTrip: e.target.checked }))}
+                  className="rounded border-border h-4 w-4"
+                />
+                <span className="text-sm text-foreground">Free trip for spouse</span>
+              </label>
+            </div>
+          </FormSection>
+
           <div className="space-y-1.5">
             <label htmlFor="notes" className="block text-sm font-medium text-foreground">
               Special Notes <span className="text-muted">(optional)</span>
@@ -532,6 +649,85 @@ export default function LeaderOnboardingPage() {
 
           {/* Invite sharing */}
           <InviteLinkShare slug={invite.slug} code={invite.code} />
+
+          {/* Enhanced Sharing Tools */}
+          <div className="space-y-3">
+            <h3 className="text-sm font-semibold text-foreground">Share Your Trip</h3>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  window.open(`https://www.facebook.com/sharer/sharer.php?quote=${encodeURIComponent(`Join me on a Holy Land pilgrimage! ${data.groupSetup.name} — register at holylandtours.com/trip/${invite.slug}`)}`, '_blank');
+                }}
+                className="flex items-center justify-center gap-2 rounded-lg border border-border px-3 py-2.5 text-sm font-medium text-secondary hover:bg-surface transition-colors"
+              >
+                <Facebook className="h-4 w-4" />
+                Share to Facebook
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const emailBody = `Subject: Join Our Holy Land Trip!\n\nDear Friends,\n\n${data.groupSetup.inviteMessage || `I'm organizing a trip to the Holy Land and would love for you to join!`}\n\nRegister here: holylandtours.com/trip/${invite.slug}\n\nPrice: $${pricingConfig.pricePerPerson}/person (installments available)\n\n${data.personalInfo.name}`;
+                  navigator.clipboard.writeText(emailBody);
+                  setCopiedEmail(true);
+                  setTimeout(() => setCopiedEmail(false), 2000);
+                }}
+                className="flex items-center justify-center gap-2 rounded-lg border border-border px-3 py-2.5 text-sm font-medium text-secondary hover:bg-surface transition-colors"
+              >
+                {copiedEmail ? <Check className="h-4 w-4 text-green-600" /> : <Mail className="h-4 w-4" />}
+                {copiedEmail ? "Copied!" : "Email Template"}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  // Simulated print bulletin
+                  window.print();
+                }}
+                className="flex items-center justify-center gap-2 rounded-lg border border-border px-3 py-2.5 text-sm font-medium text-secondary hover:bg-surface transition-colors"
+              >
+                <Printer className="h-4 w-4" />
+                Print Bulletin
+              </button>
+              <div className="flex items-center justify-center gap-2 rounded-lg border border-border px-3 py-2.5 text-sm font-medium text-secondary bg-surface">
+                <QrCode className="h-4 w-4" />
+                QR Code
+              </div>
+            </div>
+          </div>
+
+          {/* Trip Page Preview */}
+          <div className="space-y-2">
+            <p className="text-sm font-semibold text-foreground">Your Public Trip Page</p>
+            <div className="rounded-xl border border-border overflow-hidden">
+              <div
+                className="h-32 bg-cover bg-center relative"
+                style={{ backgroundImage: `url(${holyLandImages.jerusalem.url})` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
+                  <div>
+                    <p className="text-white text-sm font-bold">{data.groupSetup.name || "Your Trip"}</p>
+                    <p className="text-white/70 text-xs">Led by {data.personalInfo.title} {data.personalInfo.name}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-bold mono text-foreground">${pricingConfig.pricePerPerson}</span>
+                  {pricingConfig.allowInstallments && pricingConfig.installmentOptions.length > 0 && (
+                    <span className="text-xs text-secondary">
+                      or ${Math.ceil((pricingConfig.pricePerPerson - pricingConfig.depositAmount) / pricingConfig.installmentOptions[pricingConfig.installmentOptions.length - 1])}/mo
+                    </span>
+                  )}
+                </div>
+                <button className="w-full rounded-lg bg-foreground px-4 py-2 text-xs font-medium text-background">
+                  Reserve Your Spot &rarr;
+                </button>
+              </div>
+            </div>
+            <p className="text-xs text-muted text-center">
+              This is how your congregation sees the trip page
+            </p>
+          </div>
 
           {/* What's Next timeline */}
           <div className="space-y-3">

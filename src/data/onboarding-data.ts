@@ -148,6 +148,15 @@ export const depositConfig = {
   ],
 };
 
+export const defaultPricingConfig = {
+  pricePerPerson: 2800,
+  allowInstallments: true,
+  installmentOptions: [6, 12],
+  depositAmount: 500,
+  pastorFreeTrip: true,
+  spouseFreeTrip: true,
+};
+
 // ─── Group Name Suggestions ──────────────────────────────────────────────────
 
 export function generateGroupNameSuggestions(orgName: string, season: string): string[] {

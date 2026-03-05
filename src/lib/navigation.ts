@@ -16,6 +16,8 @@ import {
   MessageCircle,
   Megaphone,
   Bot,
+  Building,
+  Globe,
   type LucideIcon,
 } from "lucide-react";
 
@@ -30,6 +32,8 @@ export const operatorNav: NavItem[] = [
   { label: "Groups", href: "/operator/groups", icon: Users },
   { label: "Revenue", href: "/operator/revenue", icon: DollarSign },
   { label: "Itineraries", href: "/operator/itineraries", icon: Map },
+  { label: "Suppliers", href: "/operator/suppliers", icon: Building },
+  { label: "Guides", href: "/operator/guides", icon: Globe },
   { label: "Leaders", href: "/operator/leaders", icon: UserCheck },
   { label: "Settings", href: "/operator/settings", icon: Settings },
 ];

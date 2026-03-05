@@ -36,3 +36,19 @@ export { SafetyCard } from "./safety-card";
 export { InviteLinkShare } from "./invite-link-share";
 export { DepositCard } from "./deposit-card";
 export { CelebrationOverlay } from "./celebration-overlay";
+
+// Phase 4 — Agentic UI
+export { AgentChat } from "./agent-chat";
+export { AgentMessage } from "./agent-message";
+export { AgentComponentRenderer } from "./agent-component-renderer";
+
+// Phase 5 — Market Differentiation
+export { TripHero } from "./trip-hero";
+export { InstallmentCalculator } from "./installment-calculator";
+export { GuideProfileCard } from "./guide-profile-card";
+export { TripFAQ } from "./trip-faq";
+export { PaymentSchedule } from "./payment-schedule";
+export { ContentTimeline } from "./content-timeline";
+export { PostTripSummary } from "./post-trip-summary";
+export { TestimonialForm } from "./testimonial-form";
+export { ReferralCard } from "./referral-card";

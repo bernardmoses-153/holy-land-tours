@@ -41,4 +41,18 @@ export const PAYMENT_STATUS_LABELS: Record<string, string> = {
   refunded: "Refunded",
 };
 
+export const SUPPLIER_BOOKING_STATUS_LABELS: Record<string, string> = {
+  draft: "Draft",
+  requested: "Requested",
+  confirmed: "Confirmed",
+  modified: "Modified",
+  cancelled: "Cancelled",
+};
+
+export const GUIDE_ASSIGNMENT_STATUS_LABELS: Record<string, string> = {
+  assigned: "Assigned",
+  confirmed: "Confirmed",
+  completed: "Completed",
+};
+
 export const MOCK_DELAY = 300;

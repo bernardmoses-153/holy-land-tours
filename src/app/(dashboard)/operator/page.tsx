@@ -20,6 +20,8 @@ import {
 } from "@/components/shared";
 import { formatCurrency, formatDate, formatPercent } from "@/lib/utils";
 import { GROUP_STATUS_LABELS } from "@/lib/constants";
+import { groupCosts } from "@/data/mock-data";
+import { TrendingUp as MarginIcon } from "lucide-react";
 
 export default function OperatorDashboard() {
   const { data: groups, loading: groupsLoading } = useGroups();
@@ -39,11 +41,38 @@ export default function OperatorDashboard() {
     const collectionRate =
       totalExpected > 0 ? (totalCollected / totalExpected) * 100 : 0;
 
+    // Calculate margins
+    let totalCostsAll = 0;
+    let totalRevenueWithCosts = 0;
+    let bestMargin = { name: "", margin: 0 };
+    let worstMargin = { name: "", margin: 100 };
+
+    groups.forEach((g) => {
+      const costs = groupCosts.find((gc) => gc.groupId === g.id);
+      if (costs && g.totalRevenue > 0) {
+        const totalGroupCost = costs.hotel + costs.transport + costs.guide + costs.meals + costs.activities + costs.other + costs.commissions;
+        totalCostsAll += totalGroupCost;
+        totalRevenueWithCosts += g.totalRevenue;
+        const margin = ((g.totalRevenue - totalGroupCost) / g.totalRevenue) * 100;
+        if (margin > bestMargin.margin) bestMargin = { name: g.name, margin };
+        if (margin < worstMargin.margin) worstMargin = { name: g.name, margin };
+      }
+    });
+
+    const avgMargin = totalRevenueWithCosts > 0
+      ? ((totalRevenueWithCosts - totalCostsAll) / totalRevenueWithCosts) * 100
+      : 0;
+    const avgCostPerTourist = activeTourists > 0 ? totalCostsAll / activeTourists : 0;
+
     return {
       totalGroups: operator.totalGroups,
       activeTourists,
       totalRevenue,
       collectionRate,
+      avgMargin,
+      avgCostPerTourist,
+      bestMargin,
+      worstMargin,
     };
   }, [groups, operator]);
 
@@ -59,36 +88,61 @@ export default function OperatorDashboard() {
           <LoadingSkeleton variant="stat" count={4} />
         </div>
       ) : stats ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <StatCard
-            label="Total Groups"
-            value={stats.totalGroups}
-            icon={Users}
-            change="+2 this quarter"
-            trend="up"
-          />
-          <StatCard
-            label="Active Tourists"
-            value={`${stats.activeTourists}+`}
-            icon={Globe}
-            change="Across all groups"
-            trend="neutral"
-          />
-          <StatCard
-            label="Total Revenue"
-            value={formatCurrency(stats.totalRevenue)}
-            icon={DollarSign}
-            change="+12%"
-            trend="up"
-          />
-          <StatCard
-            label="Collection Rate"
-            value={formatPercent(stats.collectionRate)}
-            icon={Percent}
-            change="On track"
-            trend="up"
-          />
-        </div>
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <StatCard
+              label="Total Groups"
+              value={stats.totalGroups}
+              icon={Users}
+              change="+2 this quarter"
+              trend="up"
+            />
+            <StatCard
+              label="Active Tourists"
+              value={`${stats.activeTourists}+`}
+              icon={Globe}
+              change="Across all groups"
+              trend="neutral"
+            />
+            <StatCard
+              label="Total Revenue"
+              value={formatCurrency(stats.totalRevenue)}
+              icon={DollarSign}
+              change="+12%"
+              trend="up"
+            />
+            <StatCard
+              label="Collection Rate"
+              value={formatPercent(stats.collectionRate)}
+              icon={Percent}
+              change="On track"
+              trend="up"
+            />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            <StatCard
+              label="Gross Margin"
+              value={formatPercent(stats.avgMargin)}
+              icon={MarginIcon}
+              change="Avg across groups"
+              trend="up"
+            />
+            <StatCard
+              label="Avg Cost/Tourist"
+              value={formatCurrency(stats.avgCostPerTourist)}
+              icon={DollarSign}
+              change="All-in cost"
+              trend="neutral"
+            />
+            <StatCard
+              label="Best Margin Group"
+              value={formatPercent(stats.bestMargin.margin)}
+              icon={MarginIcon}
+              change={stats.bestMargin.name.split(" ").slice(0, 2).join(" ")}
+              trend="up"
+            />
+          </div>
+        </>
       ) : null}
 
       <div>
