@@ -28,7 +28,7 @@ const roles: {
     description:
       "Recruit travelers, earn commissions, and lead unforgettable journeys.",
     icon: UserCheck,
-    href: "/leader",
+    href: "/onboarding/leader",
   },
   {
     id: "tourist",
@@ -36,7 +36,7 @@ const roles: {
     description:
       "Book your pilgrimage, track your trip, and enjoy AI-guided tours.",
     icon: Compass,
-    href: "/tourist",
+    href: "/join",
   },
 ];
 
@@ -49,7 +49,12 @@ export default function SelectRolePage() {
     if (!selected) return;
     const role = roles.find((r) => r.id === selected);
     if (!role) return;
-    login(selected);
+
+    // Operator goes directly to dashboard (already has onboarding)
+    if (selected === "operator") {
+      login(selected);
+    }
+
     router.push(role.href);
   }
 

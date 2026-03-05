@@ -224,3 +224,31 @@ export interface EnrichedItineraryDay extends ItineraryDay {
   difficulty?: "easy" | "moderate" | "challenging";
   walkingDistance?: string;
 }
+
+// ─── Onboarding Types ─────────────────────────────────────────────────────────
+
+export interface LeaderOnboardingData {
+  step: number;
+  personalInfo: { name: string; title: string; phone: string };
+  organizationInfo: { name: string; type: string; estimatedSize: string; website?: string };
+  tourPreferences: { itineraryId: string; season: string; style: string[]; notes?: string };
+  groupSetup: { name: string; description: string; inviteMessage: string };
+  completed: boolean;
+}
+
+export interface TouristOnboardingData {
+  step: number;
+  groupSlug: string;
+  personalInfo: { dob?: string; passportNumber?: string; passportExpiry?: string };
+  emergencyContact: { name: string; phone: string; relationship: string };
+  preferences: { dietary: string[]; mobility?: string; room: string; roommate?: string };
+  depositPaid: boolean;
+  completed: boolean;
+}
+
+export interface GroupInvite {
+  groupId: string;
+  slug: string;
+  code: string;
+  active: boolean;
+}

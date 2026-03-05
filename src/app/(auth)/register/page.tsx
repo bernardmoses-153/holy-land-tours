@@ -1,22 +1,33 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 const inputStyles =
   "w-full rounded-lg border border-border px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2";
 
-export default function RegisterPage() {
+function RegisterForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
+  const group = searchParams.get("group");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    router.push("/verify");
+
+    if (redirect) {
+      const params = new URLSearchParams();
+      params.set("redirect", redirect);
+      if (group) params.set("group", group);
+      router.push(`/verify?${params.toString()}`);
+    } else {
+      router.push("/verify");
+    }
   }
 
   return (
@@ -29,7 +40,9 @@ export default function RegisterPage() {
           Create your account
         </h1>
         <p className="text-sm text-muted">
-          Join thousands of Holy Land travelers
+          {group
+            ? "Create an account to join your group"
+            : "Join thousands of Holy Land travelers"}
         </p>
       </div>
 
@@ -106,5 +119,13 @@ export default function RegisterPage() {
         </Link>
       </p>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense>
+      <RegisterForm />
+    </Suspense>
   );
 }

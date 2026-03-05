@@ -25,3 +25,14 @@ export { ActionCard } from "./action-card";
 export { PhotoCard } from "./photo-card";
 export { JournalEntry } from "./journal-entry";
 export { AnnouncementComposer } from "./announcement-composer";
+
+// Phase 3 — Onboarding components
+export { OnboardingProgress } from "./onboarding-progress";
+export { OnboardingStep } from "./onboarding-step";
+export { FormSection } from "./form-section";
+export { ItineraryPreviewCard } from "./itinerary-preview-card";
+export { GroupPreviewCard } from "./group-preview-card";
+export { SafetyCard } from "./safety-card";
+export { InviteLinkShare } from "./invite-link-share";
+export { DepositCard } from "./deposit-card";
+export { CelebrationOverlay } from "./celebration-overlay";
